@@ -1,0 +1,19 @@
+<ng-container *ngIf="parameter">
+  <ng-container [ngSwitch]="controlTypeId">
+    <ng-container *ngSwitchCase="1">
+      <mat-form-field [formGroup]="parentForm" appearance="outline" hideRequiredMarker="true" [ngStyle]="{'width.px': width}" floatLabel="always">
+        <mat-label *ngIf="showTitle">
+          {{ parameter.name }}
+          <span class="help" *ngIf="showHelp">
+            <mat-icon class="help" [matTooltip]="'Min: '+parameter.minimumValue+'\n'+'Max: '+parameter.maximumValue+'\n'+'Default: '+parameter.defaultValue" matTooltipPosition="after">help</mat-icon>
+          </span>
+        </mat-label>
+        <input type="number" [id]="ref" [formControlName]="ref" matInput required class="no-spin" [value]="parameter.currentValue">
+        <mat-hint align="end" class="units" innerHTML="{{ parameter.units == 'null' ? '' : parameter.units }}"></mat-hint>
+      </mat-form-field>
+    </ng-container>
+    <ng-container *ngSwitchCase="3">
+      <mat-checkbox [(ngModel)]="+parameter.currentValue" (change)="onCheckChange($event)">{{ parameter.name }}</mat-checkbox>
+    </ng-container>
+  </ng-container>
+</ng-container>

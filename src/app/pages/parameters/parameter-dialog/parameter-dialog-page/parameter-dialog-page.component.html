@@ -1,0 +1,61 @@
+<ng-container *ngIf="page.isExpansion; else regular">
+  <div class="flex-column space" style="margin: 1px 1px 10px 1px;">
+    <mat-accordion>
+      <mat-expansion-panel #mep="matExpansionPanel">
+        <mat-expansion-panel-header>
+          <mat-panel-description>
+            {{ page.title }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="flex-column space" [ngClass]="{'boxed': page.isBoxed}">
+          <ng-container *ngFor="let content of page">
+            <ng-container [ngSwitch]="checkInstanceOf(content)">
+              <ng-container *ngSwitchCase="'Parameter'">
+                  <slu-parameter-edit [parentForm]="parentForm" [parameter]="content"></slu-parameter-edit>
+              </ng-container>
+              <ng-container *ngSwitchCase="'ParameterDialog'">
+                <slu-parameter-dialog [parentForm]="parentForm" [dialog]="content"></slu-parameter-dialog>
+              </ng-container>
+              <ng-container *ngSwitchCase="'ParameterDialogPageContents'">
+                <slu-parameter-dialog-page [parentForm]="parentForm" [page]="content"></slu-parameter-dialog-page>
+              </ng-container>
+              <ng-container *ngSwitchCase="'ParameterDialogTable'">
+                <slu-parameter-dialog-table [parentForm]="parentForm" [page]="content"></slu-parameter-dialog-table>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</ng-container>
+<ng-template #regular>
+  <ng-container *ngIf="page.isBoxed && page.title">
+    <div class="title">{{ page.title }}</div>
+  </ng-container>
+  <div class="flex-column" [ngClass]="{'boxed': page.isBoxed}">
+    <div class="flex-row">
+      <ng-container *ngFor="let content of page">
+        <ng-container [ngSwitch]="checkInstanceOf(content)">
+          <ng-container *ngSwitchCase="'Parameter'">
+            <div class="flex-column end gutter-right">
+              <slu-parameter-edit [parentForm]="parentForm" [parameter]="content"></slu-parameter-edit>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'ParameterDialog'">
+            <slu-parameter-dialog [parentForm]="parentForm" [dialog]="content"></slu-parameter-dialog>
+            <hr>
+          </ng-container>
+          <ng-container *ngSwitchCase="'ParameterDialogPageContents'">
+            <slu-parameter-dialog-page [parentForm]="parentForm" [page]="content"></slu-parameter-dialog-page>
+            <hr>
+          </ng-container>
+          <ng-container *ngSwitchCase="'ParameterDialogTable'">
+            <slu-parameter-dialog-table [parentForm]="parentForm" [page]="content"></slu-parameter-dialog-table>
+            <hr>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-template>

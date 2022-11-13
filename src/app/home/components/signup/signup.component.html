@@ -1,0 +1,94 @@
+<div class="flex-column center gutter-top">
+   <mat-card class="signup-card">
+      <mat-card-header>
+         <mat-card-title>Request access</mat-card-title>
+         <mat-card-subtitle>
+            Complete this form to submit an access request and we'll get back to you soon.
+         </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content style="margin-left: 16px; margin-right: 16px;">
+         <form [formGroup]="registrationForm" #formDirective="ngForm">
+            <h3>Your new account info</h3>
+            <mat-form-field class="full-width">
+               <input matInput placeholder="Your full name" name="name" id="name" formControlName="name" required>
+               <mat-error *ngIf="registrationForm.controls.name.invalid">{{getNameError()}}</mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+               <input matInput placeholder="Email address" name="email" id="email" formControlName="email" required>
+               <mat-error *ngIf="registrationForm.controls.email.invalid">{{getEmailError()}}</mat-error>
+            </mat-form-field>
+            <div class="flex-row">
+               <mat-slide-toggle #toggle>Show password requirements</mat-slide-toggle>
+            </div>
+            <div class="flex-row space">
+               <mat-form-field>
+                  <input matInput #password 
+                     placeholder="Password" 
+                     name="password" 
+                     id="password" 
+                     [formControl]="passwordComponent.passwordFormControl"
+                     type="password"
+                     required>
+                  <mat-error *ngIf="passwordComponent.passwordFormControl.hasError('pattern')">
+                     Password is not valid
+                  </mat-error>
+                  <mat-error *ngIf="passwordComponent.passwordFormControl.hasError('required')">
+                     Password is required
+                  </mat-error>
+               </mat-form-field>
+               <mat-form-field>
+                  <input matInput #passwordToConfirm 
+                     name="confirmPassword" 
+                     id="confirmPassword" 
+                     placeholder="Confirm password" 
+                     [formControl]="passwordComponent.passwordConfirmationFormControl"
+                     type="password">
+                  <mat-error *ngIf="passwordComponent.passwordConfirmationFormControl.hasError('required')">
+                  Password confirmation is required
+                  </mat-error>
+                  <mat-error
+                  *ngIf="!passwordComponent.passwordConfirmationFormControl.hasError('required') && passwordComponent.passwordConfirmationFormControl.hasError('notConfirmed')">
+                  Passwords must match
+                  </mat-error>
+               </mat-form-field>
+            </div>
+        
+            <div hidden>
+               <mat-password-strength #passwordComponent
+                  [min]="8"
+                  [password]="password.value">
+               </mat-password-strength>
+            </div>
+
+               <mat-password-strength-info
+                  *ngIf="toggle.checked"
+                  [lowerCaseCriteriaMsg]="'At least one lowercase letter'"
+                  [upperCaseCriteriaMsg]="'At least one uppercase letter'"
+                  [digitsCriteriaMsg]="'At least one number'"
+                  [specialCharsCriteriaMsg]="'At least one special character (!@#$%^&*)'"
+                  [minCharsCriteriaMsg]="'At least 8 characters long'"
+                  [passwordComponent]="passwordComponent">
+               </mat-password-strength-info>
+
+            <br />
+            <h3>Justification</h3>
+            <div class="flex-row space">
+               <slu-primary-role-select [required]="true" (primaryRole)="onPrimaryRoleSelect($event)"></slu-primary-role-select>
+               <slu-country-select [required]="true" (country)="onCountrySelect($event)"></slu-country-select>
+            </div>
+            <mat-form-field class="full-width" hintLabel="Max 255 characters">
+               <mat-label>Intended use</mat-label>
+               <textarea  id="reason" formControlName="reason" matInput #reasonText matInput placeholder="I intend to use PERSiST for..." name="use" required></textarea>
+               <mat-hint align="end">{{reasonText.value?.length || 0}}/255</mat-hint>
+               <mat-error *ngIf="registrationForm.controls.reason.invalid">{{getReasonError()}}</mat-error>
+            </mat-form-field>
+            <div class="flex-row end gutter-top">
+               <mat-checkbox [labelPosition]="'before'" formControlName="agreement">I agree to the <a href (click)="onTermsClick($event)">terms and conditions</a></mat-checkbox>
+            </div>
+            <div class="flex-row end gutter-top">
+               <button mat-raised-button type="button" color="primary" (click)="onSubmit()" [disabled]="registrationForm.invalid || !country || isUploading">Send request</button>
+            </div>
+         </form>
+      </mat-card-content>
+   </mat-card>
+</div>

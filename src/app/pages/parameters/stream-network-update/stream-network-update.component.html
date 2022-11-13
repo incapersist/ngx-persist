@@ -1,0 +1,6 @@
+<div class="flex-row" *ngIf="network">
+  <slu-stream-network-graph [parentForm]="parentForm" [originalStructure]="network" (editStatus)="isNetworkEdited = $event" (structure)="onStructureChange($event)"></slu-stream-network-graph>
+</div>
+<div class="flex-row end">
+  <button mat-raised-button (click)="updateNetwork()" [disabled]="(isNetworkEdited && !newReachStructure)">Update network</button>
+</div>

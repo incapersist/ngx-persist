@@ -1,0 +1,5 @@
+<ng-container *ngIf="reachId">
+  <ng-container *ngFor="let soilBelow of soilsBelow">
+    <slu-simple-dygraphs-chart [resultTypeId]="4" [runId]="runId" [startDate]="startDate" [itemId]="12" [reachId]="reachId" [soilId]="soilId" [extraId]="soilBelow.id" [title]="'Percolation to ' + soilBelow.reference"></slu-simple-dygraphs-chart>
+  </ng-container>
+</ng-container>

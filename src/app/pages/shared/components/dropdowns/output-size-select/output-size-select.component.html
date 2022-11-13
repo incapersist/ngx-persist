@@ -1,0 +1,8 @@
+<mat-form-field *ngIf="sizeOptions && sizeOptions.length > 0">
+    <mat-select placeholder="Output size" [disabled]="disabled" [value]="selectedSize?.id" (selectionChange)="onSizeSelect($event)">
+        <mat-option *ngFor="let option of sizeOptions" [value]="option.id">
+            {{option.model_size_name}}
+        </mat-option>
+    </mat-select>
+    <mat-hint align="end">{{selectedSize?.description}}</mat-hint>
+</mat-form-field>

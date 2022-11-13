@@ -1,0 +1,24 @@
+.boxed {
+    border: 1px solid #e0e0e0;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+.title {
+    display: inline;
+    position: relative;
+    top: 10px;
+    left: 5px;
+    padding: 0 5px 0 5px;
+    background: white;
+    font-style: italic;
+}
+
+// Use this to force a flex row break between different groups
+// https://stackoverflow.com/questions/29732575/how-to-specify-line-breaks-in-a-multi-line-flexbox-layout/29733127#29733127
+hr {
+    width: 100%;
+    flex-basis: 100%; 
+    height: 0; 
+    margin: 0; 
+    border: 0;
+}

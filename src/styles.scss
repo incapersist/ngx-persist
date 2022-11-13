@@ -1,0 +1,104 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.flex-auto {
+    flex: 1 1 auto;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.space {
+    justify-content: space-between;
+}
+.space-evenly {
+    justify-content: space-evenly;
+}
+.end {
+    justify-content: flex-end;
+}
+.start {
+    justify-content: flex-start;
+}
+.center {
+    align-items: center;
+    justify-content: center;
+}
+.gutter-top {
+    margin-top: 30px;
+}
+.gutter-bottom {
+    margin-bottom: 30px;
+}
+.gutter-right {
+    margin-right: 10px;
+}
+
+.mat-card {
+//  max-width: 400px;
+  min-width: 400px;
+  margin-right: 25px;
+  margin-bottom: 25px;
+}
+//.mat-form-field {
+   // margin-bottom: 25px;
+//}
+.material-icons.color_green { color: #00FF00; }
+.material-icons.color_red { color: #FF0000; }
+
+.material-icons.small {
+    font-size: 16px;
+}
+.mat-icon.small {
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+}
+.mat-icon-button .mat-icon.small {
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+}
+.mat-icon-button.small {
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+}
+.mat-mini-fab.small {
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    margin-top: 5px;
+}
+.mat-mini-fab .mat-icon.small {
+    margin-top: -23px;
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    line-height: 18px;
+}
+// For the error notification snackbar
+.error-notification {
+    // https://github.com/angular/components/issues/11239
+    white-space: pre-wrap;
+}
+.white-snackbar {
+    background: #fff;
+    color: rgba(0,0,0,.87);
+}
+.timepicker-backdrop-overlay{
+    z-index: 1000 !important;
+}
+
+.timepicker-overlay{
+    z-index: 1000 !important;
+}

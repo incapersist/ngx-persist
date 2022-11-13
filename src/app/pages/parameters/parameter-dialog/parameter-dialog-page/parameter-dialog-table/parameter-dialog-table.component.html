@@ -1,0 +1,18 @@
+<div class="flex-column">
+  <div class="flex-row space">
+    <span>&nbsp;</span>
+    <ng-container *ngFor="let row of page._contents; let i = index">
+      <span>{{ page._columnTitles[i] }}</span>
+    </ng-container>
+  </div>
+  <ng-container *ngFor="let row of page._contents; let i = index">
+    <div class="flex-row space center">
+      <span>{{ page._rowTitles[i] }}</span>
+      <ng-container *ngFor="let cell of row">
+        <span>
+          <slu-parameter-edit [parentForm]="parentForm" [parameter]="cell" [showTitle]="false" [showHelp]="false" [width]="100"></slu-parameter-edit>
+        </span>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

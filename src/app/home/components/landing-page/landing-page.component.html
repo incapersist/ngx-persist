@@ -1,0 +1,75 @@
+<div class="hero-image">
+  <div class="topnav-container">
+    <div class="topnav">
+      <a (click)="auth.login()" style="cursor: pointer">Sign in</a>
+      <a [routerLink]="'/home/signup'">Get access</a>
+    </div>
+  </div>
+  <div class="hero-text-container">
+    <div class="hero-text">
+      PERSiST
+    </div>
+  </div>
+  <div class="hero-text-container">
+    <div class="hero-subtext">
+      <p><u>P</u>recipitation, <u>E</u>vapotranspiration and <u>R</u>unoff <u>Si</u>mulator for <u>S</u>olute <u>T</u>ransport</p>
+    </div>
+  </div>
+</div>
+<div class="caption">
+  Fyris River, Uppsala, Sweden. Image copyright &copy; Martyn Futter 2014
+</div>
+
+<div class="main-content">
+  <div id="what-is-this">
+    <h2>What is this?</h2>
+    <img src="assets/setup.png" height="222" width="300" alt="Conceptual diagram" class="floated-image" (click)="onImageClick($event, 'assets/setup.png')">
+    <img src="assets/web_persist_charts.png" height="187" width="300" alt="Screenshot of Web PERSiST results charts" class="floated-image" (click)="onImageClick($event, 'assets/web_persist_charts.png')">
+    <p>
+      PERSiST, the Precipitation, Evapotranspiration and Runoff Simulator for Solute Transport, is a flexible modelling environment for predicting flows in everything from small streams to large rivers. 
+      The model was originally developed as a standalone Microsoft Windows desktop application, but is now available as a cloud-hosted web app.
+    </p>
+    <p>
+      PERSiST simulates water movement in land and stream. The model uses a semi-distributed representation of water movement in the land. Incoming precipitation can be routed through an arbitrary number of soil “boxes” to represent, e.g., overland, soilwater and groundwater flows as well as flow contributions from upslope and riparian areas. Both main-stem and multi-branch reach structures can be simulated. 
+      The model operates at a daily time step and can be calibrated to observed streamflow at one or more points in the catchment.
+    </p>
+    <p>
+      PERSiST is in active use by researchers in Europe, North America and Asia.
+    </p>
+    <p>
+      Questions? <a href="mailto:info@persistmodel.org">Just ask</a>.
+    </p>
+  </div>
+
+  <div id="getting-access">
+    <h2>Getting access</h2>
+    <p>
+      PERSiST is currently free to use and available to anyone with a legitimate research interest. You do need to create an account, however, and access is not guaranteed. Anyone may apply, but a human being will review your request which will be approved or denied depending on the information you supply. 
+    </p>
+  </div>
+
+  <div id="references">
+    <h2>References</h2>
+    <p>
+      An open-access description of the PERSiST model is available from Hydrology and Earth System Sciences <a href="https://www.hydrol-earth-syst-sci.net/18/855/2014/hess-18-855-2014.pdf" target="_blank">in PDF format</a>.
+    </p>
+  </div>
+
+  <div id="acknowledgements">
+    <h2>Acknowledgements</h2>
+    <p>
+      PERSiST was created by a large number of people. 
+      <a href="https://www.researchgate.net/profile/Daniel_Butterfield2" target="_blank">Dan Butterfield</a> 
+      and <a href="https://www.researchgate.net/profile/Martyn_Futter" target="_blank">Martyn Futter</a> 
+      have been primarily responsible for model development. 
+      <a href="https://www.researchgate.net/profile/Paul_Whitehead4" target="_blank">Paul Whitehead</a>, 
+      the father of the INCA family of models, offered inspiration and guidance. 
+    </p>
+  </div>
+</div>
+
+<div id="myModal" class="modal" *ngIf="showPhotoModal" (click)="showPhotoModal = false">
+  <span class="close">&times;</span>
+  <img class="modal-content" id="img01" [src]="photoSrc">
+  <div id="caption">{{caption}}</div>
+</div>

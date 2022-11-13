@@ -1,0 +1,28 @@
+<div class="content">
+    <ng-container *ngIf="showProgress">
+        <div id="spinner">
+            <mat-progress-spinner mode="indeterminate" [value]="progress"></mat-progress-spinner>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="chartData && show">
+        <div class="flex-column">
+            <div class="stats">
+                <slu-chart-performance-statistics [runId]="runId" [itemId]="itemId" [reachId]="reachId"></slu-chart-performance-statistics>
+            </div>
+            <ng-dygraphs #chart
+              [data]="chartData"
+              [options]="options">
+            </ng-dygraphs>
+        </div>
+        <ng-container *ngIf="isMultiLine">
+            <div class="flex-row end">
+                <div class="flex-col" *ngFor="let label of options.labels; let i = index">
+                    <ng-container *ngIf="i > 0">
+                        <input type=checkbox [id]="i-1" checked (click)="changeVisibility($event)">
+                        <label [for]="i">{{label}}</label><br/>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>

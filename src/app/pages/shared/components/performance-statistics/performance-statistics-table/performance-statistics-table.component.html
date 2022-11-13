@@ -1,0 +1,162 @@
+<ng-container *ngIf="isFull; else compact">
+  <div class="flex-row space">
+    <ng-container *ngIf="showContents; else showTitle">
+      <mat-slide-toggle [checked]="isFull" (change)="onToggleChange($event)">Show full table</mat-slide-toggle>
+      <slu-index-select [parentForm]="tempForm" [modelSetupId]="modelSetupId" [indexerId]="5" [selectFirst]="true" (index)="onReachSelect($event)"></slu-index-select>
+      <a mat-mini-fab (click)="onChartButtonClick($event)" class="small" matTooltip="View results charts" color="primary" aria-label="Results">
+        <mat-icon class="small">trending_up</mat-icon>
+      </a>
+    </ng-container>
+    <ng-template #showTitle>
+      Performance statistics table
+    </ng-template>
+    <div class="flex-row space">
+      <button mat-icon-button color="accent" class="small" (click)="showContents = !showContents"><mat-icon>{{showContents ? 'minimize' : 'maximize'}}</mat-icon></button>
+      &nbsp;
+      <button mat-icon-button color="accent" class="small" (click)="snackBarRef.dismiss()"><mat-icon>close</mat-icon></button>
+    </div>
+  </div>
+  <ng-container *ngIf="showContents && tableData && tableData.length > 0">
+    <div class="flex row">
+      <table mat-table [dataSource]="tableData" class="mat-elevation-z8">
+        <!-- Date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Run date </th>
+          <td mat-cell *matCellDef="let element"> {{element.runDate}} </td>
+        </ng-container>
+
+        <!-- r2 Column -->
+        <ng-container matColumnDef="r2">
+          <th mat-header-cell *matHeaderCellDef> R<sup>2</sup> </th>
+          <td mat-cell *matCellDef="let element" [matTooltip]="element.r2"> {{element.r2 | sigFig}} </td>
+        </ng-container>
+
+        <!-- n-s Column -->
+        <ng-container matColumnDef="n_s">
+          <th mat-header-cell *matHeaderCellDef> N-S </th>
+          <td mat-cell *matCellDef="let element" [matTooltip]="element.n_s"> {{element.n_s | sigFig}} </td>
+        </ng-container>
+
+        <!-- RMSE Column -->
+        <ng-container matColumnDef="rmse">
+          <th mat-header-cell *matHeaderCellDef> RMSE </th>
+          <td mat-cell *matCellDef="let element" [matTooltip]="element.rmse"> {{element.rmse | sigFig}} </td>
+        </ng-container>
+
+        <!-- RE Column -->
+        <ng-container matColumnDef="re">
+          <th mat-header-cell *matHeaderCellDef> RE </th>
+          <td mat-cell *matCellDef="let element" [matTooltip]="element.re"> {{element.re | sigFig}} </td>
+        </ng-container>
+
+        <!-- Log n-s Column -->
+        <ng-container matColumnDef="log_n_s">
+          <th mat-header-cell *matHeaderCellDef> Log N-S </th>
+          <td mat-cell *matCellDef="let element" [matTooltip]="element.log_n_s"> {{element.log_n_s | sigFig}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="fullColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: fullColumns;"></tr>
+      </table>
+    </div>
+  </ng-container>
+</ng-container>
+  <ng-template #compact>
+    <div class="flex-row space">
+      <ng-container *ngIf="showContents; else showTitle">
+        <mat-slide-toggle [checked]="isFull" (change)="onToggleChange($event)">Show full table</mat-slide-toggle>
+      </ng-container>
+      <ng-template #showTitle>
+        Performance statistics table
+      </ng-template>
+      <div class="flex-row space">
+        <button mat-icon-button color="accent" class="small" (click)="showContents = !showContents"><mat-icon>{{showContents ? 'minimize' : 'maximize'}}</mat-icon></button>
+        &nbsp;
+        <button mat-icon-button color="accent" class="small" (click)="snackBarRef.dismiss()"><mat-icon>close</mat-icon></button>
+      </div>
+    </div>
+    <ng-container *ngIf="showContents && compactTableData && compactTableData.length > 0">
+      <div class="flex row gutter-top">
+        <table mat-table [dataSource]="compactTableData" class="mat-elevation-z8">
+          <!-- Charts button column -->
+          <ng-container matColumnDef="chartButton">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <a mat-mini-fab (click)="onChartButtonClick($event, element)" class="small" matTooltip="View results charts" color="primary" aria-label="Results">
+                <mat-icon class="small">trending_up</mat-icon>
+              </a>
+            </td>
+          </ng-container>
+
+          <!-- Reach Column -->
+          <ng-container matColumnDef="reach">
+            <th mat-header-cell *matHeaderCellDef> Reach </th>
+            <td mat-cell *matCellDef="let element"> {{element.reachName}} </td>
+          </ng-container>
+
+          <!-- r2 Column -->
+          <ng-container matColumnDef="r2">
+            <th mat-header-cell *matHeaderCellDef> R<sup>2</sup> </th>
+            <td mat-cell *matCellDef="let element" [matTooltip]="element.r2" [ngClass]="{'good': (element.r2 > element.old_r2), 'bad':  (element.r2 < element.old_r2)}"> {{element.r2 | sigFig}} </td>
+          </ng-container>
+
+          <!-- Old r2 Column -->
+          <ng-container matColumnDef="old_r2">
+            <th mat-header-cell *matHeaderCellDef> Old R<sup>2</sup> </th>
+            <td mat-cell *matCellDef="let element" [matTooltip]="element.old_r2"> {{element.old_r2 ? (element.old_r2 | sigFig) : 'N/A'}} </td>
+          </ng-container>
+
+          <!-- n-s Column -->
+          <ng-container matColumnDef="n_s">
+            <th mat-header-cell *matHeaderCellDef> N-S </th>
+            <td mat-cell *matCellDef="let element" [matTooltip]="element.n_s" [ngClass]="{'good': (element.n_s > element.old_n_s), 'bad':  (element.n_s < element.old_n_s)}"> {{element.n_s | sigFig}} </td>
+          </ng-container>
+
+          <!-- Old n-s Column -->
+          <ng-container matColumnDef="old_n_s">
+            <th mat-header-cell *matHeaderCellDef> Old N-S </th>
+            <td mat-cell *matCellDef="let element" [matTooltip]="element.old_n_s"> {{element.old_n_s ? (element.old_n_s | sigFig) : 'N/A'}} </td>
+          </ng-container>
+
+          <!-- RMSE Column -->
+          <ng-container matColumnDef="rmse">
+            <th mat-header-cell *matHeaderCellDef> RMSE </th>
+            <td mat-cell *matCellDef="let element" [matTooltip]="element.rmse" [ngClass]="{'good': (element.rmse < element.old_rmse), 'bad':  (element.rmse > element.old_rmse)}"> {{element.rmse | sigFig}} </td>
+          </ng-container>
+
+          <!-- Old RMSE Column -->
+          <ng-container matColumnDef="old_rmse">
+            <th mat-header-cell *matHeaderCellDef> Old RMSE </th>
+            <td mat-cell *matCellDef="let element" [matTooltip]="element.old_rmse"> {{element.old_rmse ? (element.old_rmse | sigFig) : 'N/A'}} </td>
+          </ng-container>
+
+          <!-- RE Column -->
+          <ng-container matColumnDef="re">
+            <th mat-header-cell *matHeaderCellDef> RE </th>
+            <td mat-cell *matCellDef="let element" [matTooltip]="element.re" [ngClass]="getRePerf(element)"> {{element.re | sigFig}} </td>
+          </ng-container>
+
+          <!-- Old RE Column -->
+          <ng-container matColumnDef="old_re">
+            <th mat-header-cell *matHeaderCellDef> Old RE </th>
+            <td mat-cell *matCellDef="let element" [matTooltip]="element.old_re"> {{element.old_re ? (element.old_re | sigFig) : 'N/A'}} </td>
+          </ng-container>
+
+          <!-- Log n-s Column -->
+          <ng-container matColumnDef="log_n_s">
+            <th mat-header-cell *matHeaderCellDef> Log N-S </th>
+            <td mat-cell *matCellDef="let element" [matTooltip]="element.log_n_s" [ngClass]="{'good': (element.log_n_s > element.old_log_n_s), 'bad':  (element.log_n_s < element.old_log_n_s)}"> {{element.log_n_s | sigFig}} </td>
+          </ng-container>
+
+          <!-- Old n-s Column -->
+          <ng-container matColumnDef="old_log_n_s">
+            <th mat-header-cell *matHeaderCellDef> Old Log N-S </th>
+            <td mat-cell *matCellDef="let element" [matTooltip]="element.old_log_n_s"> {{element.old_log_n_s ? (element.old_log_n_s | sigFig) : 'N/A'}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="compactColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: compactColumns;"></tr>
+        </table>
+      </div>
+    </ng-container>
+  </ng-template>

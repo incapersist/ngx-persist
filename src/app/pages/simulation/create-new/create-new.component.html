@@ -1,0 +1,94 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Create a NEW model setup</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="modelSetupForm" #formDirective="ngForm">
+      <div class="flex-column space">
+        <mat-form-field>
+          <mat-label>Reference</mat-label>
+          <input type="text" [id]="referenceId" formControlName="reference" matInput #referenceText required>
+          <mat-hint align="start">To help you identify this model setup</mat-hint>
+          <mat-hint align="end">{{ referenceText.value?.length || 0 }}/45</mat-hint>
+          <mat-error *ngIf="modelSetupForm.controls.reference.invalid">{{ getReferenceError() }}</mat-error>
+        </mat-form-field>
+        <div class="flex-row space">
+          <div class="flex-column">
+            <slu-parameter-set-select #parameterSelect [parentForm]="modelSetupForm" (parameterSet)="onParameterSetSelect($event)"></slu-parameter-set-select>
+            <div class="flex-row end" style="margin-top: -15px">
+              <button mat-icon-button matTooltip="Generate a new parameter set" class="small" color="primary" aria-label="Generate a new parameter set" (click)="onGenerateClick($event)">
+                <mat-icon class="small">build</mat-icon>
+              </button>
+              &nbsp;
+              <a mat-icon-button [routerLink]="'/pages/import'" matTooltip="Upload an existing parameter set" class="small" color="primary" aria-label="Upload an existing parameter set">
+                <mat-icon class="small">backup</mat-icon>
+              </a>
+            </div>
+          </div>
+          <div class="flex-column">
+            <slu-input-data-select [parentForm]="modelSetupForm" [ref]="'inputDataId'" (inputs)="onInputDataSelect($event)"></slu-input-data-select>
+          </div>
+        </div>
+        <div class="flex-row space">
+          <mat-form-field>
+            <mat-label>Start date</mat-label>
+            <input [id]="startDateId" formControlName="startDate" matInput [matDatepicker]="picker" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <ng-container *ngIf="parameterSetId && !hasDailyStepSize">
+              <mat-form-field>
+                  <mat-label>Start time</mat-label>
+                  <input aria-label="default time" formControlName="startTime" [ngxTimepicker]="startTime" matInput>
+              </mat-form-field>
+              <ngx-material-timepicker #startTime></ngx-material-timepicker>
+          </ng-container>
+        </div>
+        <div class="flex-row space">
+          <mat-form-field>
+            <mat-label>Timesteps</mat-label>
+            <input type="number" [id]="timestepsId" formControlName="timesteps" matInput required>
+          </mat-form-field>
+        </div>
+        <div class="flex-row space" *ngIf="optionalFileTypes && optionalFileTypes.length > 0">
+          <mat-accordion>
+            <mat-expansion-panel #mep="matExpansionPanel">
+              <mat-expansion-panel-header>
+                <mat-panel-description>
+                  Include other types of data
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <ng-container *ngFor="let fileType of optionalFileTypes">
+                <div class="flex-row">
+                  <slu-input-data-select 
+                    [parentForm]="modelSetupForm" 
+                    [fileType]="fileType.id"
+                    [title]="fileType.name" 
+                    [ref]="fileType.table_name"
+                    [required]="false" 
+                    (inputs)="setOptionalFileId($event, fileType.id)">
+                  </slu-input-data-select>
+                </div>
+              </ng-container>
+              <div class="flex row">
+                <slu-stream-network-select 
+                  [parentForm]="modelSetupForm" 
+                  [parameterSetId]="parameterSetId"
+                  [required]="false" 
+                  (network)="setStreamNetwork($event)">
+                </slu-stream-network-select>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+        <br/>
+        <mat-error *ngIf="modelSetupForm.errors">{{ getError() }}</mat-error>
+        <div class="flex-row end">
+          <button mat-raised-button type="button" color="primary" (click)="onSubmit()" [disabled]="modelSetupForm.invalid || modelSetupForm.pending || isSaving">
+            Save
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

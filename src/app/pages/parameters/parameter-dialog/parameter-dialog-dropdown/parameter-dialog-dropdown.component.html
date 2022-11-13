@@ -1,0 +1,11 @@
+<ng-container *ngIf="indexers && indexers.length > 0">
+    <mat-form-field [formGroup]="parentForm">
+        <mat-label>{{dialog?.name}}</mat-label>
+        <mat-select id="dialogDropdown" formControlName="dialogDropdown" (selectionChange)="onIndexSelect($event)" required>
+            <mat-option *ngFor="let indexer of indexers" [value]="indexer">
+                {{indexer}}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="parentForm.controls.dialogDropdown.invalid">{{ getError() }}</mat-error>
+    </mat-form-field>
+</ng-container>

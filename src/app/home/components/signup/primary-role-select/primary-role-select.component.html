@@ -1,0 +1,7 @@
+<mat-form-field>
+    <mat-select placeholder="Primary role" [value]="selectedPrimaryRole?.id" [required]="required" (selectionChange)="onPrimaryRoleSelect($event)">
+        <mat-option *ngFor="let primaryRole of primaryRoles" [value]="primaryRole.id">
+            {{primaryRole.name}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

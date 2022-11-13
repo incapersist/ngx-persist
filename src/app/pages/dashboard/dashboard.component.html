@@ -1,0 +1,66 @@
+<h2>Dashboard</h2>
+<p><em>Here's what you currently have stored in the database</em></p>
+
+<div class="flex-row">
+    <ng-container *ngFor="let snapshot of snapshots">
+        <mat-card class="snapshot-card" (click)="onCardClick($event, snapshot)">
+            <mat-card-content>
+                <span class="snapshot-number">{{ snapshot.count }}</span>
+                <span class="snapshot-text">{{ snapshot.title }}</span>
+                <ng-container *ngIf="snapshot.isOpen; else toolbar">
+                    <div [ngSwitch]="snapshot.typeId" style="margin-top: 30px;">
+                        <ng-container *ngSwitchCase="1">
+                            <slu-parameter-list (done)="onDeleteDone($event)"></slu-parameter-list>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="2">
+                            <slu-model-setup-list (done)="onDeleteDone($event)"></slu-model-setup-list>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="3">
+                            <slu-results-set-list (done)="onDeleteDone($event)"></slu-results-set-list>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="9">
+                            <slu-reach-structure-list (done)="onDeleteDone($event)"></slu-reach-structure-list>
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>
+                            <slu-input-data-list [fileTypeId]="snapshot.inputFileTypeId" (done)="onDeleteDone($event)"></slu-input-data-list>
+                        </ng-container>
+                    </div>
+                </ng-container>
+                <ng-template #toolbar>
+                    <div class="flex-row end" [ngSwitch]="snapshot.typeId">
+                        <ng-container *ngSwitchCase="1">
+                            <span>
+                                <a mat-icon-button [routerLink]="['/pages/import']" class="small" matTooltip="Upload a parameter set" color="primary" aria-label="Upload">
+                                    <mat-icon class="small">cloud_upload</mat-icon>
+                                </a>
+                            </span>
+                            &nbsp;
+                            <span>
+                                <a mat-icon-button [routerLink]="['/pages/model-run']" [queryParams]="{generate: true}" class="small" matTooltip="Generate a parameter set" color="primary" aria-label="Generate">
+                                    <mat-icon class="small">build</mat-icon>
+                                </a>
+                            </span>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="2">
+                            <span>
+                                <a mat-icon-button [routerLink]="['/pages/model-run']" class="small" matTooltip="Create a new model setup" color="primary" aria-label="Create a new model setup">
+                                    <mat-icon class="small">build</mat-icon>
+                                </a>
+                            </span>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="3">
+                            <span>&nbsp;</span>
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>
+                            <span>
+                                <a mat-icon-button [routerLink]="['/pages/import']" class="small" matTooltip="Upload an input file" color="primary" aria-label="Upload">
+                                    <mat-icon class="small">cloud_upload</mat-icon>
+                                </a>
+                            </span>
+                        </ng-container>
+                    </div>
+                </ng-template>
+            </mat-card-content>
+        </mat-card>
+    </ng-container>
+</div>

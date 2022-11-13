@@ -1,0 +1,51 @@
+<h2>Edit parameters</h2>
+<div class="flex-row">
+  <mat-card class="parameter-edit">
+    <mat-card-content>
+      <div class="flex-column space">
+        <form [formGroup]="parameterEditForm" (ngSubmit)="onSubmit()">
+          <div class="flex-column space">
+            <div class="flex-row space">
+              <slu-parameter-set-select [parentForm]="parameterEditForm" [selectedId]="parameterSetId" (parameterSet)="onParameterSetSelect($event)"></slu-parameter-set-select>
+              <ng-container *ngIf="dialogs && dialogs.length > 0 || modelSetupId">
+                <slu-simulation-run #simulation [isCompact]="true" [parameterSetId]="parameterSetId" [modelSetupId]="modelSetupId" [showNoneOption]="true" (setup)="onModelSetupSelect($event)" (complete)="onRunComplete($event)"></slu-simulation-run>
+              </ng-container>
+              <ng-container *ngIf="dialogs && dialogs.length > 0">
+                <div class="flex-column space">
+                  <div class="flex-row space">
+                    <mat-form-field [formGroup]="parameterEditForm" appearance="outline">
+                      <mat-label>Add notes...</mat-label>
+                      <textarea formControlName="notes" matInput></textarea>
+                    </mat-form-field>
+                  </div>
+                  <div class="flex-row end">
+                    <button mat-raised-button type="submit" color="primary" style="align-self: flex-start" [disabled]="parameterEditForm.invalid || parameterEditForm.pending || isSaved || isSaving || isRunning">
+                      {{ modelSetupId ? 'Save & Run' : 'Save' }}
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div [formGroup]="parameterEditForm" class="flex-row" *ngIf="dialogs && dialogs.length > 0">
+              <mat-checkbox formControlName="linkedEditCheck" [labelPosition]="'after'">Use linked editing</mat-checkbox>
+            </div>
+            <div class="flex-row space" *ngIf="message && parameterSetId && !dialogs">
+              {{ message }}
+            </div>
+            <br />
+            <mat-tab-group backgroundColor="primary" animationDuration="0ms" (selectedIndexChange)="onTabChange($event)" *ngIf="dialogs">
+              <mat-tab [label]="dialog.title" *ngFor="let dialog of dialogs"> 
+                <ng-template matTabContent>
+                  <slu-parameter-dialog [parentForm]="parameterEditForm" [dialog]="dialog"></slu-parameter-dialog>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Stream network"> 
+                <slu-stream-network-update [parameterSetId]="parameterSetId"></slu-stream-network-update>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </form>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

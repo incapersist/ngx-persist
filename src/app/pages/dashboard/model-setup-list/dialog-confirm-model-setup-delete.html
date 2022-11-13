@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Delete model setup</h1>
+<div mat-dialog-content>
+  <div *ngIf="data.dependencies">
+    <p>The following dependencies will also be deleted:</p>
+    <ul>
+      <li *ngIf="data.dependencies.result_set_count > 0">
+        {{ data.dependencies.result_set_count }} result set(s)
+      </li>
+    </ul>
+  </div>
+  <p>Are you sure you want to delete this model setup?</p>
+</div>
+<div mat-dialog-actions class="flex-row space">
+  <button mat-raised-button [mat-dialog-close]="false">Cancel</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="true" cdkFocusInitial>Yes, delete</button>
+</div>

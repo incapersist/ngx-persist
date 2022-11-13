@@ -1,0 +1,4 @@
+<slu-simulation-run-select [resultsRequired]="true" (run)="onRunSelect($event)" (count)="onRunCountChange($event)"></slu-simulation-run-select>
+<ng-container *ngIf="isRunCountRetrieved && availableResultsCount == 0">
+    <p>There are no results available (do you need to run the model?)</p>
+</ng-container>

@@ -1,0 +1,58 @@
+<div class="flex-row space gutter-top">
+  <div class="flex-column">
+    <h4>Available indexes</h4>
+    <ng-container *ngIf="availableIndexes && availableIndexes.length > 0; else noneAvailable">
+      <div class="flex-row" style="flex-grow: 1;flex-basis: 0">
+        <button mat-icon-button class="material-icons color_green" aria-label="Add available index icon" (click)="onAddAvailableIndexClick(selectedIndex)">
+          <mat-icon>add_circle</mat-icon>
+        </button>
+        <mat-form-field>
+            <mat-select [placeholder]="'Pick an index  (' + availableIndexes.length + ' left)...'" [value]="selectedIndex?.id" (selectionChange)="onIndexSelect($event)">
+                <mat-option *ngFor="let availableIndex of availableIndexes" [value]="availableIndex.id">
+                    {{availableIndex.reference}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+    </ng-container>
+    <ng-template #noneAvailable>
+      <mat-error>None available</mat-error>
+    </ng-template>
+  </div>
+  <div class="divider"></div>
+  <div class="flex-column" style="flex-grow: 1;flex-basis: 0;">
+    <h3>Your indexes</h3>
+    <ng-container *ngIf="currentIndexes && currentIndexes.length > 0; else noIndexes">
+      <div class="flex-row" *ngFor="let currentIndex of currentIndexes; index as i">
+        <ng-container *ngIf="showAll || i < maxDisplayLength">       
+          <button mat-icon-button class="material-icons color_red" aria-label="Remove index icon" (click)="onRemoveIndexClick(currentIndex)">
+            <mat-icon>remove_circle</mat-icon>
+          </button>
+          {{ currentIndex.reference}}
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-template #noIndexes>
+      <mat-error>You must add an index!</mat-error>
+    </ng-template>
+    <ng-container *ngIf="currentIndexes.length > maxDisplayLength">
+      <div class="flex-row end gutter-top">
+        <button class="link" (click)="showAll = !showAll">{{ showAll ? 'Show less...' : 'Show more...'}}</button>
+      </div>
+    </ng-container>
+  </div>
+  <div class="divider"></div>
+  <div class="flex-column" style="flex-grow: 1;flex-basis: 0">
+    <h4>Add new index</h4>
+    <div class="flex-row">
+      <mat-form-field>
+        <mat-label>Index name</mat-label>
+        <input type="text" [id]="referenceId" matInput required [(ngModel)]="newIndex">
+      </mat-form-field>
+      <button mat-icon-button class="material-icons color_green" aria-label="Remove index icon" (click)="onAddNewIndexClick()" [disabled]="!newIndex || indexExists()">
+        <mat-icon>add_circle</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="flex-row"></div>

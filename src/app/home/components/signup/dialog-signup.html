@@ -1,0 +1,18 @@
+<ng-container *ngIf="data.statusCode > 0; else exists">
+  <h1 mat-dialog-title>Request submitted</h1>
+  <div mat-dialog-content>
+    <p>Thank you, your access request was submitted. You will hear back soon.</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="true">Ok</button>
+  </div>
+</ng-container>
+<ng-template #exists>
+  <h1 mat-dialog-title>Already registered</h1>
+  <div mat-dialog-content>
+    <p>You have already registered with this email address. If you are waiting for access approval, you'll hear back soon.</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="true">Ok</button>
+  </div>
+</ng-template>

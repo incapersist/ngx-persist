@@ -1,0 +1,9 @@
+<mat-form-field [formGroup]="parentForm">
+    <mat-label>Index</mat-label>
+    <mat-select id="indexId" formControlName="indexId" (selectionChange)="onIndexSelect($event)" required>
+        <mat-option *ngFor="let index of indexes" [value]="index.id">
+            {{index.reference}}
+        </mat-option>
+    </mat-select>
+    <mat-error *ngIf="parentForm.controls.indexId.invalid">{{ getError() }}</mat-error>
+</mat-form-field>

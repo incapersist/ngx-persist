@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Reach {{data.reach.name}} has inputs!</h1>
+<div mat-dialog-content>
+  <p>If you remove {{data.reach.name}}, all upstream reaches will be removed too. Are you sure you want this?</p>
+</div>
+<div mat-dialog-actions class="flex-row space">
+  <button mat-raised-button [mat-dialog-close]="false">Cancel</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="true" cdkFocusInitial>Yes, remove</button>
+</div>

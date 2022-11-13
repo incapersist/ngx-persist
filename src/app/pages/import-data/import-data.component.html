@@ -1,0 +1,7 @@
+<h2>Upload data</h2>
+<p><em>Import Desktop PERSiST files for use in Web PERSiST</em></p>
+<div class="flex-row">
+    <slu-parameter-upload (complete)="isParameterDownloadVisible = $event"></slu-parameter-upload>
+    <slu-input-upload (complete)="isInputDownloadVisible = $event"></slu-input-upload>
+    <slu-structure-upload></slu-structure-upload>
+</div>

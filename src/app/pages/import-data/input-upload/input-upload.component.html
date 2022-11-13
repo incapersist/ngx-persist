@@ -1,0 +1,74 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Time series input file</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="inputUploadForm" (ngSubmit)="onSubmit()" #formDirective="ngForm">
+            <div class="flex-column space">
+                <div class="flex-row end">
+                    <slu-input-type-select (type)="onFileTypeSelect($event)"></slu-input-type-select>
+                </div>
+                <slu-parameter-set-select [parentForm]="inputUploadForm" (parameterSet)="onParameterSetSelect($event)"></slu-parameter-set-select>
+                <div class="flex-row">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Reference</mat-label>
+                        <input type="text" [id]="referenceId" formControlName="reference" matInput #referenceText required>
+                        <mat-hint align="start">To help you identify this input file</mat-hint>
+                        <mat-hint align="end">{{ referenceText.value?.length || 0 }}/45</mat-hint>
+                        <mat-error *ngIf="inputUploadForm.controls.reference.invalid">{{ getReferenceError() }}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="flex-row gutter-top space">
+                    <mat-form-field>
+                        <mat-label>Start date</mat-label>
+                        <input [id]="startDateId" formControlName="startDate" matInput [matDatepicker]="picker" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-hint align="start">The date of the first row in the file</mat-hint>
+                        <mat-error *ngIf="inputUploadForm.controls.startDate.invalid">{{ getStartDateError() }}</mat-error>
+                    </mat-form-field>
+                    <ng-container *ngIf="parameterSet && !hasDailyStepSize">
+                        <mat-form-field>
+                            <mat-label>Start time</mat-label>
+                            <input aria-label="default time" formControlName="startTime" [ngxTimepicker]="startTime" matInput>
+                        </mat-form-field>
+                        <ngx-material-timepicker #startTime></ngx-material-timepicker>
+                    </ng-container>
+                </div>
+                <div class="flex-row gutter-top">
+                <slu-file-upload 
+                    [parentForm]="inputUploadForm"
+                    [extension]="fileTypeExtension" 
+                    [errorMessage]="'You must select an input file to upload'"
+                    (contents)="onFileContentsChange($event)"
+                    >
+                </slu-file-upload>
+                </div>
+
+                <br />
+
+                <h3>Licensing</h3>
+                <div class="flex-row start">
+                    <mat-checkbox formControlName="permission">I confirm that <a href (click)="onPermissionClick($event)">I have permission</a> to upload these data</mat-checkbox>
+                </div>
+                <div class="flex-row start">
+                    <mat-checkbox formControlName="downloadable">These data may be downloaded</mat-checkbox>
+                </div>
+                <div class="flex-row">
+                    <mat-form-field style="width: 100%;">
+                        <textarea matInput formControlName="attribution" placeholder="Attribution"></textarea>
+                        <mat-hint align="start">If the data owner requires attribution text, enter that here. You may also enter web site or email addresses</mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <br />
+
+                <div class="flex-row end gutter-top">
+                    <button mat-raised-button type="submit" color="primary" [disabled]="inputUploadForm.invalid || inputUploadForm.pending || isUploading">
+                        Upload
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

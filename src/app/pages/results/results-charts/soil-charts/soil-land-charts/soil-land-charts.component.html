@@ -1,0 +1,32 @@
+<mat-tab-group backgroundColor="primary" animationDuration="0ms">
+  <mat-tab label="Inputs"> 
+    <ng-template matTabContent>
+      <slu-results-charts-page [parentForm]="parentForm" [runId]="runId" [startDate]="startDate" [typeId]="3" [reachId]="reachId" [soilId]="soilId" [itemIds]="[5]"></slu-results-charts-page>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Outputs"> 
+    <ng-template matTabContent>
+      <slu-results-charts-page [parentForm]="parentForm" [runId]="runId" [startDate]="startDate" [typeId]="3" [reachId]="reachId" [soilId]="soilId" [itemIds]="[11]"></slu-results-charts-page>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Runoff"> 
+    <ng-template matTabContent>
+      <slu-results-charts-page [parentForm]="parentForm" [runId]="runId" [startDate]="startDate" [typeId]="3" [reachId]="reachId" [soilId]="soilId" [itemIds]="[8]"></slu-results-charts-page>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Water depth"> 
+    <ng-template matTabContent>
+      <slu-results-charts-page [parentForm]="parentForm" [runId]="runId" [startDate]="startDate" [typeId]="3" [reachId]="reachId" [soilId]="soilId" [itemIds]="[6]"></slu-results-charts-page>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Evapotranspiration"> 
+    <ng-template matTabContent>
+      <slu-results-charts-page [parentForm]="parentForm" [runId]="runId" [startDate]="startDate" [typeId]="3" [reachId]="reachId" [soilId]="soilId" [itemIds]="[7]"></slu-results-charts-page>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Percolation"> 
+    <ng-template matTabContent>
+      <slu-percolation-results-charts-page [parentForm]="parentForm" [runId]="runId" [startDate]="startDate" [typeId]="4" [reachId]="reachId" [soilId]="soilId" [itemIds]="[12]"></slu-percolation-results-charts-page>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,28 @@
+<h2>View results</h2>
+
+<div class="flex-row">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Choose a result set</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <slu-simulation-run-select [modelSetupId]="runId" [resultsRequired]="true" (runId)="onRunSelect($event)" (count)="onRunCountChange($event)"></slu-simulation-run-select>
+            <ng-container *ngIf="isRunCountRetrieved && availableResultsCount == 0">
+                <p>There are no results available (do you need to run the model?)</p>
+            </ng-container>
+            <div class="flex-row end">
+                <mat-checkbox [labelPosition]="'before'" [(ngModel)]="showPerformanceStatistics">Also show statistics</mat-checkbox>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<ng-container *ngIf="runId && showPerformanceStatistics">
+    <slu-performance-statistics [modelSetupId]="runId"></slu-performance-statistics>
+</ng-container>
+
+<ng-container *ngIf="runId">
+    <div class="flex-column space">
+       <slu-results-charts [parentForm]="resultsForm" [runId]="runId" [reachId]="reachId"></slu-results-charts>
+    </div>
+</ng-container>

@@ -1,0 +1,7 @@
+<mat-form-field *ngIf="versions && versions.length > 0">
+    <mat-select placeholder="Model version" [value]="selectedVersion?.id" (selectionChange)="onVersionSelect($event)">
+        <mat-option *ngFor="let version of versions" [value]="version.id">
+            {{version.version}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

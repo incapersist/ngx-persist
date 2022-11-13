@@ -1,0 +1,38 @@
+<div class="flex-row space">
+    <div class="flex-column gutter-right">
+        <slu-simulation-run-select [disabled]="isRunning" [modelSetupId]="modelSetupId" [parameterSetId]="parameterSetId" [showNoneOption]="showNoneOption" (run)="onRunSetupSelect($event)" (count)="onModelSetupCount($event)"></slu-simulation-run-select>
+    </div>
+    <div class="flex-column">
+        <ng-container *ngIf="modelSetupCount > 0">
+            <slu-output-size-select [disabled]="isRunning" (size)="onOutputSizeSelect($event)"></slu-output-size-select>
+        </ng-container>
+    </div>
+</div>
+<ng-container *ngIf="modelSetupCount > 0; else noModelSetups">
+    <ng-container *ngIf="!isCompact">
+        <div class="flex-row end gutter-top">
+            <button mat-raised-button color="primary" [disabled]="!runId || isRunning" (click)="onRunClick()">
+                Run model
+            </button>
+        </div>
+        <div class="flex-row end" *ngIf="runId">
+            <mat-checkbox [labelPosition]="'before'" [(ngModel)]="goToEdit">Edit parameters after run</mat-checkbox>
+        </div>
+    </ng-container>
+    <p>{{ message }}</p>
+    <div *ngIf="showRunProgress">
+        <mat-progress-bar mode="determinate" [value]="runProgress" (animationEnd)="onRunProgressAnimationEnd($event)"></mat-progress-bar>
+    </div>
+    <div *ngIf="showSaveProgress">
+        <mat-progress-bar mode="determinate" [value]="saveProgress" (animationEnd)="onSaveProgressAnimationEnd($event)"></mat-progress-bar>
+    </div>
+    <div *ngIf="showArchiveProgress">
+        <mat-progress-bar mode="determinate" [value]="archiveProgress"></mat-progress-bar>
+    </div>
+    <ng-container *ngIf="showPerformanceStatistics">
+        <slu-performance-statistics [modelSetupId]="runId" (closed)="onClosed()"></slu-performance-statistics>
+    </ng-container>
+</ng-container>
+<ng-template #noModelSetups>
+    No existing model setups available
+</ng-template>

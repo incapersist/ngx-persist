@@ -1,0 +1,41 @@
+.graph {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.graph .edge {
+    stroke: #666;
+    fill: none;
+}
+.graph .edge .edge-label {
+    stroke: none;
+    font-size: 12px;
+    fill: #666;
+}
+.graph .panning-rect {
+    fill: transparent;
+    cursor: move;
+}
+.graph .node-group .node:focus {
+    outline: none;
+}
+/* .edge path {
+    stroke: orange !important;
+} */
+.graph-container{
+    height: 350px;
+    width: 480px;
+    border: 1px solid darkgray;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.control-container {
+    margin-left: 20px;
+    margin-bottom: 40px;
+    width: 275px;
+}
+.mat-tooltip {
+    white-space: pre-line;
+}

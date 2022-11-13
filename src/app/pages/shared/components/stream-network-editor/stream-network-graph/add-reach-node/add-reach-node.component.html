@@ -1,0 +1,41 @@
+<div class="flex-column" *ngIf="availableReaches?.length">
+  <div class="flex-row">
+    <slu-reach-node-select [ref]="'addNodeSelect'" [title]="'Add a reach'" [parentForm]="parentForm" [reaches]="availableReaches" (selected)="onReachSelect($event)"></slu-reach-node-select>
+  </div>
+  <div class="flex-row space" *ngIf="addReach">
+    <span>
+      <slu-reach-node-select [ref]="'downstreamSelect'" [title]="'Downstream reach'" [parentForm]="parentForm" [reaches]="downstreamReaches" [disabled]="!currentStructure?.nodes?.length" (selected)="onDownstreamReachSelect($event)"></slu-reach-node-select>
+    </span>
+    <span>
+      <slu-reach-node-select [ref]="'upstreamSelect'" [title]="'Upstream reach'" [parentForm]="parentForm" [reaches]="upstreamReaches" [disabled]="!downstreamReach" (selected)="onUpstreamReachSelect($event)"></slu-reach-node-select>
+    </span>
+  </div>
+  <div class="flex-row" *ngIf="addReach">
+    <mat-form-field [formGroup]="parentForm" appearance="outline" class="my-custom-component-small" style="width: 125px;">
+      <mat-label>Latitude</mat-label>
+      <input type="text" id="latitude" formControlName="latitude" matInput required [value]="addReach.lower_latitude">
+    </mat-form-field>
+    <mat-form-field [formGroup]="parentForm" appearance="outline" class="my-custom-component-small" style="width: 125px; margin-left: 10px;">
+      <mat-label>Longitude</mat-label>
+      <input type="text" id="longitude" formControlName="longitude" matInput required [value]="addReach.lower_longitude">
+    </mat-form-field>
+  </div>
+  <div [formGroup]="parentForm" class="flex-row">
+    <mat-checkbox formControlName="newStreamCheck" [labelPosition]="'after'" (change)="onCheckChange($event)">This reach starts a new stream</mat-checkbox>
+  </div>
+  <div class="flex-row space">
+    <mat-form-field [formGroup]="parentForm" appearance="outline" class="my-custom-component-small" style="width: 150px;">
+      <input type="text" placeholder="New stream name" id="newStreamName" formControlName="newStreamName" matInput required>
+      <mat-hint align="end">{{ parentForm.controls.newStreamName.value?.length || 0 }}/45</mat-hint>
+      <mat-error *ngIf="parentForm.controls.newStreamName.invalid">{{ getStreamNameError() }}</mat-error>
+    </mat-form-field>
+    <span class="align-self: flex-start">
+      <button mat-raised-button [disabled]="isAddButtonDisabled()" (click)="onAddClick()">Add</button>
+    </span>
+  </div>
+  <div class="flex-row">
+    <mat-error *ngIf="forceStream">
+      This reach must form a new stream
+    </mat-error>
+  </div>
+</div>

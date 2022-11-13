@@ -1,0 +1,26 @@
+<mat-card class="chart-card" *ngIf="runId">
+  <mat-card-header>
+    <div class="flex-row end">
+      <slu-index-select [parentForm]="parentForm" [modelSetupId]="runId" [indexerId]="5" [indexId]="reachId" [selectFirst]="!reachId" (index)="onIndexSelect($event)"></slu-index-select>
+    </div>
+   </mat-card-header>
+  <mat-card-content>
+    <mat-tab-group backgroundColor="primary" animationDuration="0ms" *ngIf="startDate && selectedReachId">
+      <mat-tab label="Stream"> 
+        <ng-template matTabContent>
+          <slu-reach-charts [parentForm]="parentForm" [runId]="runId" [startDate]="startDate" [reachId]="selectedReachId" [itemMeta]="resultsItemMeta"></slu-reach-charts>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Landscape units" *ngIf="level > 2"> 
+        <ng-template matTabContent>
+          <slu-land-charts [parentForm]="parentForm" [runId]="runId" [startDate]="startDate" [reachId]="selectedReachId" [itemMeta]="resultsItemMeta"></slu-land-charts>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Soils" *ngIf="level > 0"> 
+        <ng-template matTabContent>
+          <slu-soil-charts [parentForm]="parentForm" [runId]="runId" [startDate]="startDate" [reachId]="selectedReachId" [itemMeta]="resultsItemMeta"></slu-soil-charts>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

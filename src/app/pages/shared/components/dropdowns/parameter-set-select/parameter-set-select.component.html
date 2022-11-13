@@ -1,0 +1,9 @@
+<mat-form-field *ngIf="parameterSets && parameterSets.length > 0" [formGroup]="parentForm">
+    <mat-label>Parameter set</mat-label>
+    <mat-select id="parameterSetId" formControlName="parameterSetId"  (selectionChange)="onParameterSetSelect($event)" required>
+        <mat-option *ngFor="let parameterSet of parameterSets" [value]="parameterSet.id">
+            {{parameterSet.reference}}
+        </mat-option>
+    </mat-select>
+    <mat-error *ngIf="parentForm.controls.parameterSetId.invalid">{{ getError() }}</mat-error>
+</mat-form-field>

@@ -1,0 +1,54 @@
+<h2>Download data</h2>
+
+<div class="flex-row">
+  <ng-container *ngIf="isResultsDownloadVisible">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Fetch PERSiST results</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <slu-results-download></slu-results-download>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  <ng-container *ngIf="isIncaDownloadVisible">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Calculate and fetch INCA data</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <slu-inca-data-download></slu-inca-data-download>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  <ng-container *ngIf="isParameterDownloadVisible">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Fetch a parameter set as XML</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <slu-parameter-set-download></slu-parameter-set-download>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  <ng-container *ngIf="isInputDownloadVisible">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Fetch an input data file</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <slu-input-data-download></slu-input-data-download>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  <ng-container *ngIf="isStructureDownloadVisible">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Fetch a stream network</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <slu-stream-network-download></slu-stream-network-download>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</div>

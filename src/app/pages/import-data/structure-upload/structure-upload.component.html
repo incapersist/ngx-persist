@@ -1,0 +1,31 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Reach structure file</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="structureUploadForm" (ngSubmit)="onSubmit()" #formDirective="ngForm">
+            <div class="flex-column space">
+                <slu-parameter-set-select [parentForm]="structureUploadForm" (parameterSet)="onParameterSetSelect($event)"></slu-parameter-set-select>
+                <mat-form-field>
+                    <mat-label>Reference</mat-label>
+                    <input type="text" [id]="referenceId" formControlName="reference" matInput #referenceText required>
+                    <mat-hint align="start">To help you identify this input file</mat-hint>
+                    <mat-hint align="end">{{ referenceText.value?.length || 0 }}/45</mat-hint>
+                    <mat-error *ngIf="structureUploadForm.controls.reference.invalid">{{ getReferenceError() }}</mat-error>
+                </mat-form-field>
+                <slu-file-upload 
+                    [parentForm]="structureUploadForm"
+                    [extension]="fileTypeExtension" 
+                    [errorMessage]="'You must select a file to upload'"
+                    (contents)="onFileContentsChange($event)"
+                    >
+                </slu-file-upload>
+                <div class="flex-row end">
+                    <button mat-raised-button type="submit" color="primary" [disabled]="structureUploadForm.invalid || structureUploadForm.pending || isUploading">
+                        Upload
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,5 @@
+<ng-container *ngIf="reachId">
+  <ng-container *ngFor="let itemId of itemIds">
+    <slu-simple-dygraphs-chart [resultTypeId]="typeId" [runId]="runId" [startDate]="startDate" [itemId]="itemId" [reachId]="reachId" [soilId]="soilId"></slu-simple-dygraphs-chart>
+  </ng-container>
+</ng-container>

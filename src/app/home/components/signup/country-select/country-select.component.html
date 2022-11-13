@@ -1,0 +1,7 @@
+<mat-form-field>
+    <mat-select placeholder="Country" [value]="selectedCountry?.id" [required]="required" (selectionChange)="onCountrySelect($event)">
+        <mat-option *ngFor="let country of countries" [value]="country.id">
+            {{country.name}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

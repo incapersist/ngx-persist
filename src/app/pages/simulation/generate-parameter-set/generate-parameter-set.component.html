@@ -1,0 +1,91 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Generate a parameter set</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-horizontal-stepper #stepper (selectionChange)="onPageChange($event)">
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Meta</ng-template>
+          <div class="flex-column space">
+            <slu-model-version-select (version)="onModelVersionSelect($event)"></slu-model-version-select>
+            <mat-form-field>
+              <mat-label>Reference</mat-label>
+              <input type="text" id="reference" formControlName="reference" matInput #referenceText required>
+              <mat-hint align="start">To help you identify this parameter set</mat-hint>
+              <mat-hint align="end">{{ referenceText.value?.length || 0 }}/45</mat-hint>
+              <mat-error *ngIf="firstFormGroup.controls.reference.invalid">{{ getReferenceError() }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="flex-row space">
+            <mat-form-field>
+              <mat-label>Start date</mat-label>
+              <input id="startDate" formControlName="startDate" matInput [matDatepicker]="picker" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <ng-container *ngIf="modelVersionId && hasVariableStepSize">
+                <mat-form-field>
+                    <mat-label>Start time</mat-label>
+                    <input aria-label="default time" formControlName="startTime" [ngxTimepicker]="startTime" matInput>
+                </mat-form-field>
+                <ngx-material-timepicker #startTime></ngx-material-timepicker>
+            </ng-container>
+          </div>
+          <div class="flex-row space">
+            <mat-form-field>
+              <mat-label>Timesteps</mat-label>
+              <input type="number" id="timesteps" formControlName="timesteps" matInput required>
+            </mat-form-field>
+            <mat-form-field *ngIf="modelVersionId && hasVariableStepSize">
+              <mat-label>Step size</mat-label>
+              <input type="number" id="stepSize" formControlName="stepSize" matInput required>
+            </mat-form-field>
+          </div>
+          <div class="flex-row space gutter-top">
+            <div class="flex-column">
+              <div class="start">
+                <button mat-stroked-button color="warn" (click)="onCancelClick($event)">Cancel</button>
+              </div>
+            </div>
+            <div class="flex-column">
+              <div class="end">
+                <button mat-stroked-button color="primary" matStepperNext [disabled]="firstFormGroup.invalid || firstFormGroup.pending">Next</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step *ngFor="let indexer of indexers; let i = index">
+        <ng-template matStepLabel>{{ indexer.name }}</ng-template>
+        <slu-index-list-control [indexer]="indexer" [indexes]="indexes[i]" (list)="onIndexListChange($event, i)"></slu-index-list-control>
+        <div class="flex-row"></div>
+        <div class="flex-row space gutter-top">
+          <div class="flex-column">
+            <div class="flex-row start">
+              <button mat-stroked-button color="warn" (click)="onCancelClick($event)">Cancel</button>
+            </div>
+          </div>
+          <div class="flex-column">
+            <div class="flex-row end">
+              <button mat-stroked-button matStepperPrevious>Back</button>&nbsp;
+              <button mat-flat-button color="primary" matStepperNext [disabled]="indexes[i].length == 0">Next</button>
+            </div>
+          </div>
+        </div>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Stream network</ng-template>
+          <slu-stream-network-graph [parentForm]="secondFormGroup" [originalStructure]="network" (editStatus)="isNetworkEdited = $event" (structure)="onStructureChange($event)"></slu-stream-network-graph>
+          <div class="flex-row end gutter-top">
+            <button mat-stroked-button color="primary" (click)="onSubmit()" [disabled]="firstFormGroup.invalid || firstFormGroup.pending || !isEnoughIndexes || isSaving || (isNetworkEdited && !newReachStructure)">Save parameter set</button>
+          </div>
+          <div class="flex-row end">
+            <mat-checkbox formControlName="goToEditCheck" [labelPosition]="'before'" >Go straight to editing</mat-checkbox>
+          </div>
+        </form>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card-content>
+</mat-card>

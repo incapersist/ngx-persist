@@ -1,0 +1,62 @@
+
+<div class="flex-row">
+  <div class="flex-column">
+    <div class="graph-container">
+      <ngx-graph *ngIf="currentStructure?.nodes?.length; else emptyStructure"
+        [links]="currentStructure.edges"
+        [nodes]="currentStructure.nodes"
+        [zoomToFit$]="zoomToFit$"
+        [autoZoom]="autoZoom"
+        [center$]="center$"
+        [update$]="update$"
+      >
+
+        <ng-template #defsTemplate>
+          <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+            <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+          </svg:marker>
+        </ng-template>
+
+        <ng-template #nodeTemplate let-node>
+          <svg:g [matTooltip]="'Stream: '+node.stream.name+'\n'+'Latitude: '+node.reach.lower_latitude+'\n'+'Longitude: '+node.reach.lower_longitude" matTooltipPosition="above">
+            <svg:rect [attr.width]="node.width" [attr.height]="node.height" [attr.fill]="'none'" [attr.stroke]="'rgb(0,0,0)'" [attr.stroke-width]="1"/>
+            <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.height / 2">
+              {{node.reach.name}}
+            </svg:text>
+          </svg:g>
+        </ng-template>
+
+      </ngx-graph>
+      <ng-template #emptyStructure>
+        This structure is empty - how about adding a reach?
+      </ng-template>
+    </div>
+    <br />
+    <div class="flex-row space">
+      <button mat-raised-button (click)="resetToOriginal()">Reset to original</button>
+      <button mat-raised-button (click)="resetToDefault()">Reset to basic</button>
+      <button mat-raised-button (click)="centerGraph()">Re-center</button>
+      <button mat-raised-button (click)="resetGraph()">Start over</button>
+    </div>
+  </div>
+  <div class="flex-column control-container space">
+    <div class="flex-row">
+      <slu-add-reach-node [parentForm]="parentForm" [originalStructure]="originalStructure" [availableReaches]="availableReachList" [currentStructure]="currentStructure" [databaseStreamNames]="existingStreamNames" (selection)="onAddNode($event)"></slu-add-reach-node>
+    </div>
+    <div class="flex-row end">
+      <div class="flex-row">
+        <slu-reach-node-select [ref]="'removeNodeSelect'" [title]="'Remove a reach'" [parentForm]="parentForm" [reaches]="deleteReachList" (selected)="onRemoveNode($event)"></slu-reach-node-select>
+      </div>
+      <div class="flex-row">
+        <mat-error *ngIf="isEdited && (availableReachList?.length != 0)">
+          You must add all the reaches!
+        </mat-error>
+      </div>
+      <div class="flex-row">
+        <mat-error *ngIf="isEdited && (availableReachList?.length == 0) && unconnectedNodeList?.length != 0">
+          At least one reach has no connections
+        </mat-error>
+      </div>
+    </div>
+  </div>
+</div>

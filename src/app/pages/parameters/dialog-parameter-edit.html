@@ -1,0 +1,18 @@
+<ng-container *ngIf="data.success; else failure">
+  <h1 mat-dialog-title>Success!</h1>
+  <div mat-dialog-content>
+    <p>The parameter set edits were successfully saved.</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="true">Ok</button>
+  </div>
+</ng-container>
+<ng-template #failure>
+  <h1 mat-dialog-title>Oops</h1>
+  <div mat-dialog-content>
+    <p>Something went wrong, sorry. The parameter set edits were NOT saved.</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="true">Ok</button>
+  </div>
+</ng-template>

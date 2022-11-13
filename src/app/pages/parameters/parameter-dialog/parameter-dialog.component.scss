@@ -1,0 +1,15 @@
+@import "../../../_variables.scss";
+
+.mat-tab-body-wrapper {
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 25px;
+}
+
+.mat-tab-label-active {
+    background-color: $warn;
+}
+.mat-tab-group.mat-primary.mat-background-primary .mat-ink-bar {
+    background-color: $warn;
+}

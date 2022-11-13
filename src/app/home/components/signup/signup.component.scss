@@ -1,0 +1,15 @@
+.full-width {
+  width: 100%;
+}
+.signup-card {
+  min-width: 300px;
+  max-width: 450px;
+  margin-top: 50px;
+  margin-right: 0px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .signup-card {
+    margin-top: 0px;
+  }
+}

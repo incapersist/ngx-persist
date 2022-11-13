@@ -1,0 +1,53 @@
+<ng-container *ngIf="resultsSets && resultsSets.length > 0">
+  <table mat-table [dataSource]="resultsSets" class="mat-elevation-z8">
+    <!-- Delete Column -->
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button matTooltip="Delete" color="primary" aria-label="Delete" (click)="onDeleteClick($event, element.modelSetupId)">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Reference Column -->
+    <ng-container matColumnDef="reference">
+      <th mat-header-cell *matHeaderCellDef> Reference </th>
+      <td mat-cell *matCellDef="let element"> {{element.reference}} </td>
+    </ng-container>
+
+    <!-- Start Date Column -->
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef> Start date </th>
+      <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
+    </ng-container>
+
+    <!-- Timesteps Column -->
+    <ng-container matColumnDef="timesteps">
+      <th mat-header-cell *matHeaderCellDef> Time steps </th>
+      <td mat-cell *matCellDef="let element"> {{element.timesteps}} </td>
+    </ng-container>
+
+    <!-- Level Column -->
+    <ng-container matColumnDef="level">
+      <th mat-header-cell *matHeaderCellDef> Level </th>
+      <td mat-cell *matCellDef="let element"> {{element.levelDescription}} </td>
+    </ng-container>
+
+    <!-- Action icon Column -->
+    <ng-container matColumnDef="actionIcons">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <a mat-icon-button [routerLink]="['/pages/results']" [queryParams]="{id: element.modelSetupId}" matTooltip="View charts" color="primary" aria-label="View charts">
+          <mat-icon>bar_chart</mat-icon>
+        </a>
+        <button mat-icon-button matTooltip="Download results" color="primary" aria-label="Download this results set" (click)="onDownloadClick($event, element)">
+          <mat-icon>cloud_download</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
+  </table>
+</ng-container>

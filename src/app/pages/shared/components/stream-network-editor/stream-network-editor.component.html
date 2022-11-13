@@ -1,0 +1,15 @@
+  <ng-container>
+    <mat-card style="max-width: 100%; width: 100%;">
+      <mat-card-header>
+        <mat-card-title>Stream network editor</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="flex-row">
+          <slu-stream-network-select [parentForm]="parentForm" (network)="getStreamNetwork($event)"></slu-stream-network-select>
+        </div>
+        <div class="flex-row" *ngIf="network">
+          <slu-stream-network-graph [parentForm]="parentForm" [originalStructure]="network"></slu-stream-network-graph>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>

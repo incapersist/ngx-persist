@@ -1,0 +1,70 @@
+<div class="flex-row space-evenly">
+  <mat-card class="request-card">
+    <mat-card-header>
+      <mat-card-title>Pending access requests</mat-card-title>
+    </mat-card-header>
+    <ng-container *ngIf="pendingRequests && pendingRequests.length > 0; else noRequests">
+      <table mat-table [dataSource]="pendingRequests" class="mat-elevation-z8">
+        <!-- email button -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <a mat-icon-button [href]="'mailto:'+element.email" aria-label="Example icon-button with a heart icon">
+              <mat-icon>email</mat-icon>
+            </a>
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Role Column -->
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef> Role </th>
+          <td mat-cell *matCellDef="let element"> {{element.user_metadata.signupRole}} </td>
+        </ng-container>
+
+        <!-- Country Column -->
+        <ng-container matColumnDef="country">
+          <th mat-header-cell *matHeaderCellDef> Country </th>
+          <td mat-cell *matCellDef="let element"> {{element.user_metadata.country}} </td>
+        </ng-container>
+
+        <!-- Reason Column -->
+        <ng-container matColumnDef="reason">
+          <th mat-header-cell *matHeaderCellDef> Reason </th>
+          <td mat-cell *matCellDef="let element"> {{element.user_metadata.reason}} </td>
+        </ng-container>
+
+        <!-- Deny button -->
+        <ng-container matColumnDef="deny">
+          <th mat-header-cell *matHeaderCellDef> Deny? </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button class="material-icons color_red" (click)="onDenyClick($event, element)" [disabled]="isUploading">
+              <mat-icon>close</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Approve button -->
+        <ng-container matColumnDef="approve">
+          <th mat-header-cell *matHeaderCellDef> Approve? </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button class="material-icons color_green" (click)="onApproveClick($event, element)" [disabled]="isUploading">
+              <mat-icon>check</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
+      </table>
+    </ng-container>
+    <ng-template #noRequests>
+      There are no pending access requests
+    </ng-template>
+  </mat-card>  
+</div>

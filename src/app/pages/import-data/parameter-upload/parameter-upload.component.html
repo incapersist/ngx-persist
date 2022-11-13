@@ -1,0 +1,31 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>XML parameter file</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="parameterUploadForm" (ngSubmit)="onSubmit()" #formDirective="ngForm">
+            <div class="flex-column space">
+                <mat-form-field>
+                    <mat-label>Reference</mat-label>
+                    <input type="text" [id]="referenceId" formControlName="reference" matInput #referenceText required>
+                    <mat-hint align="start">To help you identify this parameter set</mat-hint>
+                    <mat-hint align="end">{{ referenceText.value?.length || 0 }}/45</mat-hint>
+                    <mat-error *ngIf="parameterUploadForm.controls.reference.invalid">{{ getReferenceError() }}</mat-error>
+                </mat-form-field>
+                <slu-file-upload 
+                    [parentForm]="parameterUploadForm"
+                    [extension]="'.xml'" 
+                    [allowMultiple]="true"
+                    [errorMessage]="'You must select a parameter file to upload'"
+                    (contents)="onFileContentsChange($event)"
+                    >
+                </slu-file-upload>
+                <div class="flex-row end">
+                    <button mat-raised-button type="submit" color="primary" [disabled]="parameterUploadForm.invalid || parameterUploadForm.pending || isUploading">
+                        Upload
+                    </button>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

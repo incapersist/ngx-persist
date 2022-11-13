@@ -1,0 +1,49 @@
+.mat-icon {
+    pointer-events: auto;
+}
+.em {
+    font-style: italic;
+}
+.mat-form-field {
+    line-height: 1.25;
+    margin-bottom: 5px;
+}
+.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.6em 0 0.65em 0;
+}
+.mat-form-field.mat-form-field-should-float label {
+    font-size: 1.2em;
+    margin-top: 0;
+}
+.mat-form-field-appearance-outline .mat-form-field-label {
+    top: 1.4375em;
+    margin-top: -.25em;
+}
+.mat-form-field-subscript-wrapper {
+    margin-top: -0.75em;
+}
+.units {
+    background: #fff;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+.help {
+    font-size: 0.9em;
+    float: right;
+    line-height: 1.35;
+    background: #fff;
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+}
+sup {
+    font-size: 0.8em;
+}
+// https://stackoverflow.com/questions/47058483/angular-2-material-mattooltip-multiline
+.mat-tooltip {
+    white-space: pre-line;
+}
+.no-spin::-webkit-inner-spin-button, .no-spin::-webkit-outer-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+    -moz-appearance:textfield !important;
+}

@@ -1,0 +1,38 @@
+<ng-container [ngSwitch]="data.statusCode">
+  <ng-container *ngSwitchCase="1">
+    <h1 mat-dialog-title>Approval pending</h1>
+    <div mat-dialog-content>
+      <p>Your access request has not yet been approved, so you can't login.</p>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button [mat-dialog-close]="true">Ok</button>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="2">
+    <h1 mat-dialog-title>Access denied</h1>
+    <div mat-dialog-content>
+      <p>Your request for access has been denied. You may not login.</p>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button [mat-dialog-close]="true">Ok</button>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="3">
+    <h1 mat-dialog-title>Unverified email address</h1>
+    <div mat-dialog-content>
+      <p>You must verify your email address before you can login.</p>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button [mat-dialog-close]="true">Ok</button>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="4">
+    <h1 mat-dialog-title>Login error</h1>
+    <div mat-dialog-content>
+      <p>Something went wrong, sorry.</p>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button [mat-dialog-close]="true">Ok</button>
+    </div>
+  </ng-container>
+</ng-container>

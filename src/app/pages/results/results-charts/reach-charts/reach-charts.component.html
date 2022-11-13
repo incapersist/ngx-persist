@@ -1,0 +1,17 @@
+<mat-tab-group backgroundColor="primary" animationDuration="0ms">
+  <mat-tab label="Outputs"> 
+    <ng-template matTabContent>
+      <slu-results-charts-page [parentForm]="parentForm" [runId]="runId" [startDate]="startDate" [typeId]="1" [reachId]="reachId" [itemIds]="outputPageIds"></slu-results-charts-page>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Dimensions" *ngIf="itemMeta && itemMeta[0].modelVersionCoreId > 1"> 
+    <ng-template matTabContent>
+      <slu-results-charts-page [parentForm]="parentForm" [runId]="runId" [startDate]="startDate" [typeId]="1" [reachId]="reachId" [itemIds]="[19,20,21,22]"></slu-results-charts-page>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Inputs"> 
+    <ng-template matTabContent>
+      <slu-results-charts-page [parentForm]="parentForm" [runId]="runId" [startDate]="startDate" [typeId]="1" [reachId]="reachId" [itemIds]="[13,17]"></slu-results-charts-page>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,8 @@
+<mat-form-field *ngIf="runs && runs.length > 0">
+    <mat-select placeholder="Model run" [value]="selectedRun?.id" [disabled]="disabled" (selectionChange)="onRunSelect($event)">
+        <mat-option *ngIf="showNoneOption">&lt;None&gt;</mat-option>
+        <mat-option *ngFor="let run of runs" [value]="run.id">
+            {{run.reference}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

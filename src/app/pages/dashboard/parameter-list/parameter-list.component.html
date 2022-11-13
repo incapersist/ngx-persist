@@ -1,0 +1,59 @@
+<ng-container *ngIf="parameterSets && parameterSets.length > 0">
+  <table mat-table [dataSource]="parameterSets" class="mat-elevation-z8">
+    <!-- Delete Column -->
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button matTooltip="Delete this parameter set" color="primary" aria-label="Delete" (click)="onDeleteClick($event, element.id)">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Reference Column -->
+    <ng-container matColumnDef="reference">
+      <th mat-header-cell *matHeaderCellDef> Reference </th>
+      <td mat-cell *matCellDef="let element"> {{element.reference}} </td>
+    </ng-container>
+
+    <!-- Start Date Column -->
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef> Start date </th>
+      <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+    </ng-container>
+
+    <!-- Timesteps Column -->
+    <ng-container matColumnDef="timesteps">
+      <th mat-header-cell *matHeaderCellDef> Time steps </th>
+      <td mat-cell *matCellDef="let element"> {{element.timesteps}} </td>
+    </ng-container>
+
+    <!-- model Version Column -->
+    <ng-container matColumnDef="modelVersion">
+      <th mat-header-cell *matHeaderCellDef> Model version </th>
+      <td mat-cell *matCellDef="let element"> {{element.modelVersion}} </td>
+    </ng-container>
+
+    <!-- Last edit date Column -->
+    <ng-container matColumnDef="lastEditDate">
+      <th mat-header-cell *matHeaderCellDef> Last edit </th>
+      <td mat-cell *matCellDef="let element"> {{element.lastEditDate || 'Never'}} </td>
+    </ng-container>
+
+    <!-- Action icon Column -->
+    <ng-container matColumnDef="actionIcons">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <a mat-icon-button [routerLink]="['/pages/parameters']" [queryParams]="{id: element.id}" matTooltip="Edit" color="primary" aria-label="Edit this parameter set">
+          <mat-icon>edit</mat-icon>
+        </a>
+        <button mat-icon-button matTooltip="Download" color="primary" aria-label="Download this parameter set" (click)="onDownloadClick($event, element)">
+          <mat-icon>cloud_download</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="example-element-row"></tr>
+  </table>
+</ng-container>

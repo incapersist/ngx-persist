@@ -1,0 +1,18 @@
+<ng-container *ngIf="data.success; else exists">
+  <h1 mat-dialog-title>Upload complete</h1>
+  <div mat-dialog-content>
+    <p>The structure file was successfully uploaded and imported.</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="true">Ok</button>
+  </div>
+</ng-container>
+<ng-template #exists>
+  <h1 mat-dialog-title>File already exists</h1>
+  <div mat-dialog-content>
+    <p>The structure file already exists in the database. It has NOT been imported.</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="true">Ok</button>
+  </div>
+</ng-template>

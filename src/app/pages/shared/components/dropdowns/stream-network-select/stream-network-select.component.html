@@ -1,0 +1,9 @@
+<mat-form-field [formGroup]="parentForm">
+    <mat-label>Stream network</mat-label>
+    <mat-select [id]="ref" [formControlName]="ref" (selectionChange)="onStreamNetworkSelect($event)" required>
+        <mat-option *ngFor="let network of networks" [value]="network.id">
+            {{network.reference}}
+        </mat-option>
+    </mat-select>
+    <mat-error *ngIf="parentForm.controls[ref].invalid">{{ getError() }}</mat-error>
+</mat-form-field>

@@ -1,0 +1,15 @@
+<div class="flex-row">
+    <mat-form-field [formGroup]="parentForm" (click)="bringFileSelector();">
+        <mat-label>File name</mat-label>
+        <input type="text" [id]="fileInputId" formControlName="filename" matInput #filenameText required readonly>
+        <mat-error *ngIf="parentForm.controls.filename.invalid">{{ getError() }}</mat-error>
+    </mat-form-field>&nbsp;
+    <button mat-mini-fab (click)="bringFileSelector();" style="align-self: flex-start">
+        <mat-icon>attach_file</mat-icon>
+    </button>
+</div>
+<input style="display: none;"
+        type="file" #inputFile
+        [id]="fileSelectorId"
+        [attr.accept]=extension
+        (change)="onFileInputChange($event.target.files)">

@@ -1,0 +1,9 @@
+<mat-tab-group backgroundColor="primary" animationDuration="0ms">
+  <ng-container *ngFor="let soil of soils">
+    <mat-tab [label]="soil.reference"> 
+      <ng-template matTabContent>
+        <slu-soil-land-charts [parentForm]="parentForm" [runId]="runId" [startDate]="startDate" [reachId]="reachId" [soilId]="soil.id"></slu-soil-land-charts>
+      </ng-template>
+    </mat-tab>
+  </ng-container>
+</mat-tab-group>
